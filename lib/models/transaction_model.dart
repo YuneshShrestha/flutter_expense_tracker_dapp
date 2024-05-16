@@ -2,7 +2,7 @@ class TransactionModel {
   String user;
   int amount;
   String reason;
-  int timestamp;
+  DateTime timestamp;
   TransactionModel(
       {required this.user,
       required this.amount,

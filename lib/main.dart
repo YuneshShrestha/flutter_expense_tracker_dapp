@@ -1,5 +1,7 @@
+import 'package:first_dapp/features/dashboard/bloc/dash_board_bloc.dart';
 import 'package:first_dapp/features/dashboard/ui/dashboard_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: const DashBoardPage(),
+      home: DashBoardPage(),
     );
   }
 }
