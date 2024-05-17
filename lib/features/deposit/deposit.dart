@@ -24,12 +24,12 @@ class DepositScreen extends StatelessWidget {
             const Text('Deposit Ethereum',
                 style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
-             TextField(
-              controller: recipientController,
-              decoration: const InputDecoration(
-                  labelText: 'Recipient Address', border: OutlineInputBorder()),
-            ),
-            const SizedBox(height: 16),
+            //  TextField(
+            //   controller: recipientController,
+            //   decoration: const InputDecoration(
+            //       labelText: 'Recipient Address', border: OutlineInputBorder()),
+            // ),
+            // const SizedBox(height: 16),
              TextField(
               controller: amountController,
               decoration: const InputDecoration(
@@ -53,7 +53,7 @@ class DepositScreen extends StatelessWidget {
                   onPressed: () {
                     dashBoardBloc.add(DashboardDepositEvent(
                       transactionModel: TransactionModel(
-                        user: '0xc326a59CaF9E96395546E44d3045F61C90B6606D',
+                        user: '0x1499F9645Ae571F9A75BE877d4F4489C7A374BAa',
                         amount: int.parse(amountController.text),
                         reason: reasonController.text,
                       
@@ -61,6 +61,7 @@ class DepositScreen extends StatelessWidget {
                         timestamp: DateTime.now(),
                       ),
                     ));
+                    Navigator.of(context).pop();
                   },
                   child: const Text('Deposit'),
                 ),

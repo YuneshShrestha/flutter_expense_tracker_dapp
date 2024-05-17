@@ -47,6 +47,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           } else if (state is DashboardSuccessState) {
             final transactions = state.transactions;
             final balance = state.balance;
+
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -65,9 +66,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       IconButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>  DepositScreen(
-                                dashBoardBloc: _dashBoardBloc,
-                              )));
+                              builder: (context) => DepositScreen(
+                                    dashBoardBloc: _dashBoardBloc,
+                                  )));
                         },
                         icon: Column(
                           children: [
@@ -79,8 +80,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       ),
                       IconButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const WithdrawScreen()));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => WithdrawScreen(
+                                dashBoardBloc: _dashBoardBloc,
+                              ),
+                            ),
+                          );
                         },
                         icon: Column(
                           children: [
@@ -97,14 +103,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   const SizedBox(height: 16),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: transactions.length,
                       itemBuilder: (context, index) {
                         return ListTile(
                           leading: SvgPicture.asset('assets/eth-logo.svg',
                               width: 32, height: 32),
-                          title: const Text('0x1234567890abcdef'),
-                          subtitle: Text('0.0 ETH'),
-                          trailing: Text('12:00 PM'),
+                          title: Text(transactions[index].reason),
+                          subtitle:
+                              FittedBox(child: Text(transactions[index].user)),
+                          trailing: Text("${transactions[index].amount} ETH"),
                         );
                       },
                     ),
@@ -114,7 +121,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             );
           }
           return const SizedBox(
-            child: Center(child: Text('Something went wrong')),
+            child: Center(child: Text('Loading...')),
           );
         },
       ),

@@ -37,15 +37,16 @@ contract ExpenseManager {
     emit Deposit(msg.sender, amount, reason, block.timestamp);
   }
 
-  function withdraw(uint _amount, string memory _reason) public payable{
+  function withdraw(uint _amount, string memory _reason) public{
     require(balances[msg.sender] >= _amount, "Insufficient balance");
     balances[msg.sender] -= _amount;
     transactions.push(Transaction(msg.sender, _amount, _reason, block.timestamp));
+    address(uint160(msg.sender)).transfer(_amount);
     emit Withdrawal(msg.sender, _amount, _reason, block.timestamp);
   }
 
-  function getBalance() public view returns(uint){
-    return balances[msg.sender];
+  function getBalance(address _account) public view returns(uint){
+    return balances[_account];
   }
 
   function getTransactionsCount() public view returns(uint){
@@ -54,6 +55,10 @@ contract ExpenseManager {
   }
 
   function getTransaction(uint index) public view returns(address, uint, string memory, uint){
+    require(
+        index < transactions.length,
+        "Transaction index out of bounds"
+    );
     Transaction memory transaction = transactions[index];
     return (
       transaction.user,
